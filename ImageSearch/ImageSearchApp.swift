@@ -11,7 +11,11 @@ import SwiftUI
 struct ImageSearchApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                ContentView()
+                    .navigationTitle("Image Search")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }
