@@ -21,9 +21,9 @@ struct PictureDetail: View {
             Text("\(description)")
                 .font(.largeTitle)
             
-            Image(systemName: picture.name)
+            /*Image(systemName: picture.name)
                 .resizable()
-                .scaledToFit()
+                .scaledToFit()*/
             
             
             Grid(alignment: .bottom, horizontalSpacing: 40, verticalSpacing: 10) {
@@ -40,11 +40,5 @@ struct PictureDetail: View {
                 .frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottom)
         }
         .padding()
-    }
-}
-
-struct PictureDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        PictureDetail(picture: Picture(name: "tshirt"))
     }
 }

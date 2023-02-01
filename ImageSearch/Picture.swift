@@ -6,30 +6,34 @@
 //
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Picture
-struct Picture: Codable {
+struct Picture: Hashable, Codable {
     let results: [Result]
+
 }
 
 // MARK: - Result
-struct Result: Codable {
-    let width, height: Int
-    let altDescription: String
+struct Result: Hashable, Codable {
+    let width: Int
+    let height: Int
+    let alt_description: String
     let urls: Urls
     let likes: Int
     let user: User
+
 }
 
 // MARK: - Urls
-struct Urls: Codable {
-    let raw, full, regular, small: String
-    let thumb: String
+struct Urls: Hashable, Codable {
+    let raw, full, regular, small: URL
+    let thumb: URL
 }
 
 // MARK: - User
-struct User: Codable {
+struct User: Hashable, Codable {
     let name: String
 }
 
