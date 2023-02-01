@@ -45,6 +45,8 @@ struct ContentView: View {
     
     @State private var searchText = "Test"
     
+    @State private var results = [Picture]()
+    
     var body: some View {
         
         ScrollView {
