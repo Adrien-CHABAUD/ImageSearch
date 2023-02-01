@@ -8,37 +8,48 @@
 import SwiftUI
 
 struct PictureDetail: View {
-    var picture: Picture
+    var picture: Result
     
-    var description = "A white t-shirt"
-    var widthPicture = "100"
-    var heightPicture = "200"
-    var likes = "300"
-    var publisher = "John Doe"
+    @State var data: Data?
     
     var body: some View {
         VStack {
-            Text("\(description)")
-                .font(.largeTitle)
-            
-            /*Image(systemName: picture.name)
-                .resizable()
-                .scaledToFit()*/
-            
             
             Grid(alignment: .bottom, horizontalSpacing: 40, verticalSpacing: 10) {
                 GridRow {
-                    Text("Artist: \(publisher)")
+                    Text("Artist: \(picture.user.name)")
                         .gridCellColumns(2)
                         .gridCellAnchor(.center)
                 }
                 GridRow {
-                    Text("Likes: \(likes)")
-                    Text("Size: \(widthPicture)x\(heightPicture)")
+                    Text("Likes: \(picture.likes)")
+                    Text("Size: \(picture.width)x\(picture.height)")
                 }
             }.border(.red)
                 .frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottom)
+            
+            
+            if let data = data, let uiimage = UIImage(data: data) {
+                Image(uiImage: uiimage)
+            } else {
+                Image(systemName: "tshirt")
+                    .onAppear {
+                        fetchData(urlString: picture.urls.small)
+                    }
+            }
+            
+            Text("\(picture.alt_description)")
+                .font(.caption)
+            
         }
         .padding()
+    }
+    
+    private func fetchData(urlString: URL) {
+        
+        let task = URLSession.shared.dataTask(with: urlString) { data, _, _ in
+            self.data = data
+        }
+        task.resume()
     }
 }

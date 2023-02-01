@@ -18,6 +18,7 @@ struct URLImage: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .background(.gray)
+                .border(.green)
         }
         else {
             Image(systemName: "video")
@@ -46,40 +47,6 @@ struct ContentView: View {
     @State private var numColumns = initialColumns
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: initialColumns)
     
-    // Test Images
-    /*@State private var pictures = [
-        Picture(name: "tshirt"),
-        Picture(name: "mustache"),
-        Picture(name: "eyeglasses"),
-        Picture(name: "brain"),
-        Picture(name: "icloud"),
-        Picture(name: "eye"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "icloud"),
-        Picture(name: "tshirt"),
-        Picture(name: "mustache"),
-        Picture(name: "eyeglasses"),
-        Picture(name: "brain"),
-        Picture(name: "icloud"),
-        Picture(name: "eye"),
-        Picture(name: "icloud"),
-        Picture(name: "eyeglasses"),
-        Picture(name: "brain"),
-        Picture(name: "icloud"),
-        Picture(name: "eye"),
-        Picture(name: "icloud"),
-    ]*/
-    
-    @State private var searchText = "Test"
-    
-    //@State private var results = [Picture]()
-    
     @StateObject var viewModel = ViewModel()
     
     var body: some View {
@@ -88,15 +55,9 @@ struct ContentView: View {
             LazyVGrid(columns: gridColumns) {
                 ForEach(viewModel.pictures.results, id: \.self) { result in
                     NavigationLink {
-                        //PictureDetail(picture: picture)
+                        PictureDetail(picture: result)
                     } label: {
-                        //Text(result.alt_description)
                         URLImage(urlString: result.urls.thumb)
-                        /*Image(systemName: picture.name)
-                            .resizable()
-                            .scaledToFit()
-                            .padding()
-                            .border(.green)*/
                     }
                 }
             }.border(.blue)
@@ -106,26 +67,6 @@ struct ContentView: View {
     }
 }
 
-
-/*
- 
- struct ContentView: View {
-     @StateObject var viewModel = ViewModel()
-     
-     var body: some View {
-         List {
-             ForEach(viewModel.courses, id: \.self) { course in
-                 HStack {
-                     URLImage(urlString: course.image)
-                     
-                     Text(course.name)
-                 }
-             }
-         }
-         .onAppear(perform: viewModel.fetch)
-     }
- }
- */
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
