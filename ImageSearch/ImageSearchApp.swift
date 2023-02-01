@@ -12,7 +12,7 @@ struct ImageSearchApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ContentView()
+                SearchBarView()
             }
         }
     }

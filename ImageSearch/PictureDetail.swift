@@ -39,6 +39,7 @@ struct PictureDetail: View {
                         .gridCellColumns(2)
                         .gridCellAnchor(.center)
                 }
+                
                 GridRow {
                     Text("Likes: \(picture.likes)")
                     Text("Size: \(picture.width)x\(picture.height)")

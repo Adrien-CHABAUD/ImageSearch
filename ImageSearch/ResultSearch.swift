@@ -42,14 +42,14 @@ struct URLImage: View {
     }
 }
 
-struct ContentView: View {
+struct ResultSearch: View {
+    
+    var query: String = "Glasgow"
     
     // Info used to create the grid
     private static let initialColumns = 2
     @State private var numColumns = initialColumns
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: initialColumns)
-    
-    var query = "glasgow"
     
     @StateObject var viewModel = ViewModel()
     
@@ -64,12 +64,13 @@ struct ContentView: View {
                         PictureDetail(picture: result)
                     } label: {
                         URLImage(urlString: result.urls.small)
-                            .frame(maxWidth: 200, maxHeight: 400)
+                            .frame(maxWidth: 190, maxHeight: 400)
                             .cornerRadius(10)
                     }
                 }
             }
-        }.onAppear {
+        }
+        .onAppear {
             // Set query and fetch the data
             viewModel.setQuery(query: query)
             viewModel.fetch()
@@ -81,11 +82,12 @@ struct ContentView: View {
                 }
             }
         }
+        .padding(.horizontal, 5)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ResultSearch_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ResultSearch()
     }
 }
