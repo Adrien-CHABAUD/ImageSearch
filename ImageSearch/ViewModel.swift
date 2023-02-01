@@ -14,7 +14,7 @@ class ViewModel: ObservableObject {
     @Published var pictures = Picture(results: [])
     
     private let key = "6SOnuykxJVu08ZOGIQf8sQGxUSd1Zr1CvJbEK2ay3hs"
-    private let itemPerPage = 40
+    private let itemPerPage = 100
     
     
     func fetch() {

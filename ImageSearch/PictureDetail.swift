@@ -35,14 +35,26 @@ struct PictureDetail: View {
             // Create a Grid to display the information of the picture
             Grid(alignment: .bottom, horizontalSpacing: 40, verticalSpacing: 10) {
                 GridRow {
-                    Text("Artist: \(picture.user.name)")
+                    HStack {
+                        Image(systemName: "camera")
+                        Text("\(picture.user.name)")
+                    }
                         .gridCellColumns(2)
                         .gridCellAnchor(.center)
                 }
                 
                 GridRow {
-                    Text("Likes: \(picture.likes)")
-                    Text("Size: \(picture.width)x\(picture.height)")
+                    HStack {
+                        Image(systemName: "hand.thumbsup")
+                            .foregroundColor(.green)
+                        Text("\(picture.likes)")
+                    }
+                    
+                    HStack {
+                        Image(systemName: "arrow.up.backward.and.arrow.down.forward.circle")
+                            .foregroundColor(.blue)
+                        Text("\(picture.width)x\(picture.height)")
+                    }
                 }
             }.frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottom)
             
