@@ -19,17 +19,13 @@ struct URLImage: View {
             Image(uiImage: uiimage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .background(.gray)
-                .border(.green)
         }
         else {
             // Placeholder during loading of the images/if it does
             // not work.
             Image(systemName: "photo")
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: 130, maxHeight: 70)
-                .background(.gray)
+                .scaledToFit()
                 .onAppear {
                     // Make the call to fetch the images
                     fetchData()
@@ -68,9 +64,11 @@ struct ContentView: View {
                         PictureDetail(picture: result)
                     } label: {
                         URLImage(urlString: result.urls.small)
+                            .frame(maxWidth: 200, maxHeight: 400)
+                            .cornerRadius(10)
                     }
                 }
-            }.border(.blue)
+            }
         }.onAppear {
             // Set query and fetch the data
             viewModel.setQuery(query: query)
