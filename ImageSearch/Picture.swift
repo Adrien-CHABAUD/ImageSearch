@@ -19,7 +19,7 @@ struct Picture: Hashable, Codable {
 struct Result: Hashable, Codable {
     let width: Int
     let height: Int
-    let alt_description: String
+    let description: String?
     let urls: Urls
     let likes: Int
     let user: User

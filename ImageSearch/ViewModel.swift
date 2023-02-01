@@ -9,10 +9,16 @@ import Foundation
 import SwiftUI
 
 class ViewModel: ObservableObject {
+    private var query: String = ""
+    
     @Published var pictures = Picture(results: [])
     
+    private let key = "6SOnuykxJVu08ZOGIQf8sQGxUSd1Zr1CvJbEK2ay3hs"
+    private let itemPerPage = 40
+    
+    
     func fetch() {
-        guard let url = URL(string: "https://api.unsplash.com/search/photos/?client_id=6SOnuykxJVu08ZOGIQf8sQGxUSd1Zr1CvJbEK2ay3hs&query=scotland") else {
+        guard let url = URL(string: "https://api.unsplash.com/search/photos/?client_id=\(key)&query=\(query)&per_page=\(itemPerPage)") else {
             return
         }
         
@@ -34,5 +40,9 @@ class ViewModel: ObservableObject {
         }
         task.resume()
         
+    }
+    
+    func setQuery(query: String) {
+        self.query = query
     }
 }

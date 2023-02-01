@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+//MARK: - URLImage
+// Struct used to display the little thumbnails
 struct URLImage: View {
-    let urlString: URL
     
+    let urlString: URL
     @State var data: Data?
     
     var body: some View {
@@ -21,17 +23,20 @@ struct URLImage: View {
                 .border(.green)
         }
         else {
-            Image(systemName: "video")
+            // Placeholder during loading of the images/if it does
+            // not work.
+            Image(systemName: "photo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: 130, maxHeight: 70)
                 .background(.gray)
                 .onAppear {
+                    // Make the call to fetch the images
                     fetchData()
                 }
         }
     }
-    
+    //MARK: - URLImage(fetchData)
     private func fetchData() {
         
         let task = URLSession.shared.dataTask(with: urlString) { data, _, _ in
@@ -43,26 +48,40 @@ struct URLImage: View {
 
 struct ContentView: View {
     
+    // Info used to create the grid
     private static let initialColumns = 2
     @State private var numColumns = initialColumns
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: initialColumns)
     
+    var query = "glasgow"
+    
     @StateObject var viewModel = ViewModel()
     
     var body: some View {
-        
+      //MARK: - ScrollView
         ScrollView {
             LazyVGrid(columns: gridColumns) {
                 ForEach(viewModel.pictures.results, id: \.self) { result in
                     NavigationLink {
+                        // Show a new activity with information about
+                        // the image selected
                         PictureDetail(picture: result)
                     } label: {
-                        URLImage(urlString: result.urls.thumb)
+                        URLImage(urlString: result.urls.small)
                     }
                 }
             }.border(.blue)
         }.onAppear {
+            // Set query and fetch the data
+            viewModel.setQuery(query: query)
             viewModel.fetch()
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack{
+                    Text(query)
+                }
+            }
         }
     }
 }

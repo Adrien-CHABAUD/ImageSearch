@@ -13,8 +13,6 @@ struct ImageSearchApp: App {
         WindowGroup {
             NavigationStack {
                 ContentView()
-                    .navigationTitle("Image Search")
-                    .navigationBarTitleDisplayMode(.inline)
             }
         }
     }

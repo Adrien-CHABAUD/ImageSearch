@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: - PictureDetail
 struct PictureDetail: View {
     var picture: Result
     
@@ -15,6 +16,23 @@ struct PictureDetail: View {
     var body: some View {
         VStack {
             
+            //MARK: - Image Display
+            if let data = data, let uiimage = UIImage(data: data) {
+                Image(uiImage: uiimage)
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(20)
+                    .padding(5)
+                
+            } else {
+                Image(systemName: "photo")
+                    .onAppear {
+                        fetchData(urlString: picture.urls.regular)
+                    }
+            }
+            
+            //MARK: - Different information
+            // Create a Grid to display the information of the picture
             Grid(alignment: .bottom, horizontalSpacing: 40, verticalSpacing: 10) {
                 GridRow {
                     Text("Artist: \(picture.user.name)")
@@ -25,26 +43,21 @@ struct PictureDetail: View {
                     Text("Likes: \(picture.likes)")
                     Text("Size: \(picture.width)x\(picture.height)")
                 }
-            }.border(.red)
-                .frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottom)
+            }.frame(maxWidth: .infinity, maxHeight: 100, alignment: .bottom)
             
-            
-            if let data = data, let uiimage = UIImage(data: data) {
-                Image(uiImage: uiimage)
-            } else {
-                Image(systemName: "tshirt")
-                    .onAppear {
-                        fetchData(urlString: picture.urls.small)
-                    }
+            //MARK: - Image's Description
+            if let description = picture.description {
+                Divider()
+                    .frame(maxWidth: 200)
+                
+                Text(description)
+                    .padding()
             }
-            
-            Text("\(picture.alt_description)")
-                .font(.caption)
-            
+        
         }
-        .padding()
     }
     
+    // Function used to fetch the photo to display
     private func fetchData(urlString: URL) {
         
         let task = URLSession.shared.dataTask(with: urlString) { data, _, _ in
